@@ -1,30 +1,51 @@
-import { it, expect } from 'vitest';
+import { it, expect, describe } from 'vitest';
 
-import { transformToNumber } from './numbers';
+import { cleanNumbers, transformToNumber } from './numbers';
 
-it('should transform a string number to a number of type number', () => {
-  const input = '1';
 
-  const result = transformToNumber(input);
+describe("transformToNumber()",() => {
+  it('should transform a string number to a number of type number', () => {
+    const input = '1';
+  
+    const result = transformToNumber(input);
+  
+    expect(result).toBeTypeOf('number');
+  });
+  
+  it('should transform a string number to a number of type number', () => {
+    const input = '1';
+  
+    const result = transformToNumber(input);
+  
+    expect(result).toBe(+input);
+  });
+  
+  it('should yield NaN for non-transformable values', () => {
+    const input = 'invalid';
+    const input2 = {};
+  
+    const result = transformToNumber(input);
+    const result2 = transformToNumber(input2);
+  
+    expect(result).toBeNaN();
+    expect(result2).toBeNaN();
+  });
+})
 
-  expect(result).toBeTypeOf('number');
-});
+describe("cleanNumbers()", () => {
+    it("should return an array of number if an array of string values number is provided", () => {
+       const numberValues = ['1','2'];
+       const cleanedNumbers = cleanNumbers(numberValues);
 
-it('should transform a string number to a number of type number', () => {
-  const input = '1';
+       expect(cleanedNumbers).toEqual([1,2]);  
+    })
 
-  const result = transformToNumber(input);
+    it("should throw err when invalid inout", () => {
+      const numberValues = ['',1]
 
-  expect(result).toBe(+input);
-});
 
-it('should yield NaN for non-transformable values', () => {
-  const input = 'invalid';
-  const input2 = {};
+      const cleanFn = () => cleanNumbers(numberValues);
 
-  const result = transformToNumber(input);
-  const result2 = transformToNumber(input2);
-
-  expect(result).toBeNaN();
-  expect(result2).toBeNaN();
-});
+      expect(cleanFn).toThrow()
+    })
+})
