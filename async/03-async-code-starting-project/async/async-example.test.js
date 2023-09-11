@@ -4,17 +4,15 @@ import { generateTokenPromise } from "./async-example"
 
 
 it('should generate token value', (done) => {
-        const testUserEmail = 'test@test.com'
-        generateToken(testUserEmail, (err, token) => {
-            try {
-                expect(token).toBeDefined();
-                done()
-            }
-            catch (err) {
-                done(err)
-            }
-        
-        })
+    const username = "jdjd@gmail.com"
+    generateToken(username, (err, token) => {
+        try {
+            expect(token).toBeDefined();
+            done()
+        } catch (error) {
+            done(error);
+        }   
+    })
 })
 
 it("should generate token value", () => {
